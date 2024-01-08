@@ -39,15 +39,17 @@ export default function Login() {
   };
 
   const sendUserData = async (data) => {
-    await axios.post("http://localhost:5001/users", data).then(() => {
-      Swal.fire({
-        position: "top-end",
-        icon: "success",
-        title: "Successfully login",
-        showConfirmButton: false,
-        timer: 1000,
+    await axios
+      .post("https://book-bridge-server.vercel.app/users", data)
+      .then(() => {
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Successfully login",
+          showConfirmButton: false,
+          timer: 1000,
+        });
       });
-    });
   };
   const loginWithGoogle = () => {
     signInWithPopup(auth, googleProvider).then(() => {
