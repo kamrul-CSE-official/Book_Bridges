@@ -99,14 +99,22 @@ export default function ProductDetails() {
                 </div>
               </div>
               <button
-                disabled={user?.email === data?.user?.email ? true : false}
+                disabled={
+                  user?.email === data?.user?.email || data?.state == false
+                    ? true
+                    : false
+                }
                 onClick={() => dispatch(wishList(data))}
                 className="btn bg-black hover:bg-pink-700 text-white"
               >
                 Wish list <FcLike size={20} />
               </button>
               <button
-                disabled={user?.email === data?.user?.email ? true : false}
+                disabled={
+                  user?.email === data?.user?.email || data?.state == false
+                    ? true
+                    : false
+                }
                 onClick={() => dispatch(addToCart(data))}
                 className="btn bg-purple-700 hover:bg-pink-700 text-white"
               >

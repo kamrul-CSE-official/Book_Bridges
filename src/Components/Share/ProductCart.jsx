@@ -6,7 +6,7 @@ import { addToCart } from "../../redux/productSlice/productSlice";
 import useUserInfo from "../../Utils/UserInfo";
 
 export default function ProductCart({ book }) {
-  const {user} = useUserInfo();
+  const { user } = useUserInfo();
 
   const dispatch = useDispatch();
   const handleAddToCart = (item) => {
@@ -51,7 +51,14 @@ export default function ProductCart({ book }) {
             onClick={() => handleAddToCart(book)}
             className="card-actions justify-center"
           >
-            <button disabled={user?.email === book?.user?.email ? true: false} className="btn btn-warning text-black">
+            <button
+              disabled={
+                user?.email === book?.user?.email || book?.state == false
+                  ? true
+                  : false
+              }
+              className="btn btn-warning text-black"
+            >
               <FaCartArrowDown />
               Add To Cart
             </button>

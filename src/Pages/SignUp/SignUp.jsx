@@ -68,24 +68,26 @@ export default function SignUp() {
           img: imageUrl,
         };
 
-        axios.post("http://localhost:5001/users", userData).then((res) => {
-          if (res) {
-            createUserWithEmailAndPassword(
-              auth,
-              userData?.email,
-              userData?.password
-            ).then(() => {
-              Swal.fire({
-                position: "top-end",
-                icon: "success",
-                title: "Successfully Create An Account",
-                showConfirmButton: false,
-                timer: 1000,
+        axios
+          .post("https://book-bridge-server.vercel.app/users", userData)
+          .then((res) => {
+            if (res) {
+              createUserWithEmailAndPassword(
+                auth,
+                userData?.email,
+                userData?.password
+              ).then(() => {
+                Swal.fire({
+                  position: "top-end",
+                  icon: "success",
+                  title: "Successfully Create An Account",
+                  showConfirmButton: false,
+                  timer: 1000,
+                });
+                window.location.href = "/";
               });
-              window.location.href = "/";
-            });
-          }
-        });
+            }
+          });
       } else {
         const errorData = await response.json();
         setError(`Error: ${errorData.message}`);
