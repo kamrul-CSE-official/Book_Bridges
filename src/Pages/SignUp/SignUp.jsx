@@ -12,6 +12,7 @@ import {
 import axios from "axios";
 import Swal from "sweetalert2";
 import auth from "../../firebase/firebase.config";
+import Loding from "../../Components/Share/Loding";
 
 export default function SignUp() {
   const googleProvider = new GoogleAuthProvider();
@@ -22,6 +23,7 @@ export default function SignUp() {
   const [confirmPassword, setconfirmPassword] = useState("");
   const [image, setImage] = useState("");
   const [isError, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -38,6 +40,7 @@ export default function SignUp() {
     formData.append("email", email);
     formData.append("password", password);
     formData.append("confirmPassword", confirmPassword);
+    setIsLoading(true);
 
     if (password !== confirmPassword) {
       setError("Password and confirm password do not match");
@@ -145,80 +148,87 @@ export default function SignUp() {
             </button>
             <div className=" shadow-2xl bg-base-100">
               {isError && <h4 className="text-red-500">Error: {isError}</h4>}
-              <form onSubmit={handleSubmit} className="card-body">
-                <div className="form-control">
-                  <label className="label">
-                    <span className="label-text">Name</span>
-                  </label>
-                  <input
-                    type="name"
-                    placeholder="Name"
-                    className="input input-bordered"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    required
-                  />
+              {!isLoading ? (
+                <form onSubmit={handleSubmit} className="card-body">
+                  <div className="form-control">
+                    <label className="label">
+                      <span className="label-text">Name</span>
+                    </label>
+                    <input
+                      type="name"
+                      placeholder="Name"
+                      className="input input-bordered"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      required
+                    />
+                  </div>
+                  <div className="form-control">
+                    <label className="label">
+                      <span className="label-text">Email</span>
+                    </label>
+                    <input
+                      type="email"
+                      placeholder="Email"
+                      className="input input-bordered"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      required
+                    />
+                  </div>
+                  <div className="form-control">
+                    <label className="label">
+                      <span className="label-text">Password</span>
+                    </label>
+                    <input
+                      type="password"
+                      placeholder="password"
+                      className="input input-bordered"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      required
+                    />
+                  </div>
+                  <div className="form-control">
+                    <label className="label">
+                      <span className="label-text">Confirm Password</span>
+                    </label>
+                    <input
+                      type="password"
+                      placeholder="Confirm password"
+                      className="input input-bordered"
+                      value={confirmPassword}
+                      onChange={(e) => setconfirmPassword(e.target.value)}
+                      required
+                    />
+                  </div>
+                  <div className="form-control">
+                    <label className="label">
+                      <span className="label-text">Profile Image</span>
+                    </label>
+                    <input
+                      id="image"
+                      type="file"
+                      accept="image/*"
+                      onChange={(e) => setImage(e.target.files?.[0] || null)}
+                      required
+                    />
+                  </div>
+                  <div className="form-control mt-6">
+                    <button type="submit" className="btn btn-primary">
+                      Sign Up
+                    </button>
+                  </div>
+                  <Link to="/login" className="text-blue-700 font-bold">
+                    Please Login
+                  </Link>
+                </form>
+              ) : (
+                <div>
+                  Account Creating...
+                  <Loding />
                 </div>
-                <div className="form-control">
-                  <label className="label">
-                    <span className="label-text">Email</span>
-                  </label>
-                  <input
-                    type="email"
-                    placeholder="Email"
-                    className="input input-bordered"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                  />
-                </div>
-                <div className="form-control">
-                  <label className="label">
-                    <span className="label-text">Password</span>
-                  </label>
-                  <input
-                    type="password"
-                    placeholder="password"
-                    className="input input-bordered"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                  />
-                </div>
-                <div className="form-control">
-                  <label className="label">
-                    <span className="label-text">Confirm Password</span>
-                  </label>
-                  <input
-                    type="password"
-                    placeholder="Confirm password"
-                    className="input input-bordered"
-                    value={confirmPassword}
-                    onChange={(e) => setconfirmPassword(e.target.value)}
-                    required
-                  />
-                </div>
-                <div className="form-control">
-                  <label className="label">
-                    <span className="label-text">Profile Image</span>
-                  </label>
-                  <input
-                    id="image"
-                    type="file"
-                    accept="image/*"
-                    onChange={(e) => setImage(e.target.files?.[0] || null)}
-                    required
-                  />
-                </div>
-                <div className="form-control mt-6">
-                  <button type="submit" className="btn btn-primary">
-                    Sign Up
-                  </button>
-                </div>
-                <Link to="/login" className="text-blue-700 font-bold">
-                  Please Login
-                </Link>
-              </form>
+              )}
             </div>
           </div>
         </div>

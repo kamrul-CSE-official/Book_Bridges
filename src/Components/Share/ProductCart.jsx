@@ -47,11 +47,9 @@ export default function ProductCart({ book }) {
               {book?.price <= 0 ? "0" : book.price}৳
             </div>
           </Link>
-          <div
-            onClick={() => handleAddToCart(book)}
-            className="card-actions justify-center"
-          >
+          <div className="card-actions justify-center">
             <button
+              onClick={() => handleAddToCart(book)}
               disabled={
                 user?.email === book?.user?.email || book?.state == false
                   ? true

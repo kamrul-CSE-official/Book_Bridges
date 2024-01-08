@@ -60,12 +60,17 @@ export default function ProductDetails() {
           <div className="mx-auto bg-white p-8 shadow-md rounded-md flex flex-col md:flex-row items-center justify-center gap-3">
             <img
               src={data?.img}
-              alt={data?.tilte}
+              alt={data?.title}
               className="w-full h-fit md:max-h-[550px] object-cover mb-4"
             />
 
             <div>
-              <h2 className="text-3xl font-bold mb-2">{data?.tilte}</h2>
+              <h2 className="text-3xl font-bold mb-2">
+                {data?.title}{" "}
+                <small className="text-xs text-red-500">
+                  {data?.state == false && "Out of stock"}
+                </small>
+              </h2>
               <p className="text-gray-600 mb-1">Author: {data?.author}</p>
               <p className="text-gray-600 mb-4">Edition: {data?.edithion}</p>
               <p className="text-2xl font-bold text-blue-600 mb-4">
