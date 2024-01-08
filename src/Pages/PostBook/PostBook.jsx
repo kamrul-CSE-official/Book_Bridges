@@ -57,7 +57,7 @@ export default function PostBook() {
 
         console.log(bookData);
         await axios
-          .post("http://localhost:5001/products", bookData)
+          .post("https://book-bridge-server.vercel.app/products", bookData)
           .then((res) => {
             if (res) {
               Swal.fire({
