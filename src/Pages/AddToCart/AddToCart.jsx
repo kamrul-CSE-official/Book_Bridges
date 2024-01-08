@@ -4,6 +4,7 @@ import { RiDeleteBin5Fill } from "react-icons/ri";
 import { removeAddToCart } from "../../redux/productSlice/productSlice";
 import { useState } from "react";
 import axios from "axios";
+import Loding from "../../Components/Share/Loding";
 
 export default function AddToCart() {
   const { user } = useUserInfo();
@@ -15,12 +16,11 @@ export default function AddToCart() {
   const [mobile, setMobile] = useState("");
   const [address, setAddress] = useState("");
   const [note, setNote] = useState("");
-  
-
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleCheckOut = async (e) => {
     e.preventDefault();
-
+    setIsLoading(true);
     try {
       // Prepare form data
       const formData = new FormData();
@@ -60,9 +60,7 @@ export default function AddToCart() {
           )
         )
       );
-
       window.location.href = "/checkout";
-
     } catch (error) {
       console.error("Checkout failed:", error);
     }
@@ -71,128 +69,138 @@ export default function AddToCart() {
     setYourEmail("");
     setNote("");
     setName("");
+    window.location.href = "/checkout";
   };
-  
-
 
   return (
     <div>
       <h1 className="text-3xl font-bold mb-4">Add to Cart Page</h1>
 
-      <div className="grid grid-cols-1 gap-2 md:grid-cols-2">
-        {/* Delivery Information */}
-        <form onSubmit={handleCheckOut}>
-          <h2 className="text-xl font-bold">Delivery Information</h2>
-          {/* 1 */}
-          <div className="w-full flex items-center gap-2 my-3">
-            <div className="w-full">
-              <p>Your Name</p>
-              <input
-                type="name"
-                required
-                onChange={(e) => setName(e.target.value)}
-                defaultValue={`${user?.email.substring(0, 5)}...`}
-                placeholder="Your name"
-                className="input input-bordered input-accent w-full"
-              />
-            </div>
-            <div className="w-full">
-              <p>Mobile Number</p>
-              <input
-                type="text"
-                required
-                onChange={(e) => setMobile(e.target.value)}
-                placeholder="Mobile Number"
-                className="input input-bordered input-accent w-full"
-              />
-            </div>
-          </div>
-          {/* 2 */}
-          <div className="w-full flex items-center gap-2 my-3">
-            <div className="w-full">
-              <p>Your Email</p>
-              <input
-                type="email"
-                required
-                onChange={(e) => setYourEmail(e.target.value)}
-                defaultValue={user?.email}
-                placeholder="Your Email"
-                className="input input-bordered input-accent w-full"
-              />
-            </div>
-            <div className="w-full">
-              <p>Your Address</p>
-              <input
-                type="text"
-                required
-                onChange={(e) => setAddress(e.target.value)}
-                placeholder="Your Address"
-                className="input input-bordered input-accent w-full"
-              />
-            </div>
-          </div>
-          {/* 3 */}
-          <div className="w-full">
-            <p>Note</p>
-            <input
-              type="text"
-              onChange={(e) => setNote(e.target.value)}
-              placeholder="Write Somethind...."
-              className="input input-bordered input-accent w-full"
-            />
-          </div>
-          <button
-            disabled={cart.length <= 0 ? true : false}
-            type="submit"
-            className="btn btn-primary w-full text-xl mt-10"
-          >
-            Checkout
-          </button>
-        </form>
-        {/* products list & price details */}
-        <div>
-          {/* product list */}
-          <div>
-            <h2 className="text-xl font-bold">Products List</h2>
-            {cart.length !== 0 ? (
-              <div className="flex flex-col items-start gap-1 h-64 overflow-y-auto overflow-x-hidden">
-                {cart.map((item) => (
-                  <Product key={item?._id} book={item} dispatch={dispatch} />
-                ))}
+      {!isLoading ? (
+        <div className="grid grid-cols-1 gap-2 md:grid-cols-2">
+          {/* Delivery Information */}
+          <form onSubmit={handleCheckOut}>
+            <h2 className="text-xl font-bold">Delivery Information</h2>
+            {/* 1 */}
+            <div className="w-full flex items-center gap-2 my-3">
+              <div className="w-full">
+                <p>Your Name</p>
+                <input
+                  type="name"
+                  required
+                  onChange={(e) => setName(e.target.value)}
+                  defaultValue={`${user?.email.substring(0, 5)}...`}
+                  placeholder="Your name"
+                  className="input input-bordered input-accent w-full"
+                />
               </div>
-            ) : (
-              <p className="text-md text-pink-500 font-bold">
-                [Empty] Please Add To Cart Any Products!
-              </p>
-            )}
-          </div>
-          {/* Order Summery */}
-          <div className="my-5">
-            <div className="text-xl flex items-center justify-between my-2">
-              <h4>Subtotal</h4>
-              <h4>
-                {cart.reduce((previous, current) => {
-                  return parseInt(parseInt(previous) + parseInt(current.price));
-                }, 0)}{" "}
-                ৳
-              </h4>
+              <div className="w-full">
+                <p>Mobile Number</p>
+                <input
+                  type="text"
+                  required
+                  onChange={(e) => setMobile(e.target.value)}
+                  placeholder="Mobile Number"
+                  className="input input-bordered input-accent w-full"
+                />
+              </div>
             </div>
-            <div className="text-xl flex items-center justify-between my-2">
-              <h4>Delivery</h4>
-              <h4>150 ৳</h4>
+            {/* 2 */}
+            <div className="w-full flex items-center gap-2 my-3">
+              <div className="w-full">
+                <p>Your Email</p>
+                <input
+                  type="email"
+                  required
+                  onChange={(e) => setYourEmail(e.target.value)}
+                  defaultValue={user?.email}
+                  placeholder="Your Email"
+                  className="input input-bordered input-accent w-full"
+                />
+              </div>
+              <div className="w-full">
+                <p>Your Address</p>
+                <input
+                  type="text"
+                  required
+                  onChange={(e) => setAddress(e.target.value)}
+                  placeholder="Your Address"
+                  className="input input-bordered input-accent w-full"
+                />
+              </div>
             </div>
-            <div className="text-2xl font-bold flex items-center justify-between">
-              <h4>Total</h4>
-              <h4>
-                {cart.reduce((previous, current) => {
-                  return parseInt(parseInt(previous) + parseInt(current.price));
-                }, 0) + 150}
-                ৳
-              </h4>
+            {/* 3 */}
+            <div className="w-full">
+              <p>Note</p>
+              <input
+                type="text"
+                onChange={(e) => setNote(e.target.value)}
+                placeholder="Write Somethind...."
+                className="input input-bordered input-accent w-full"
+              />
+            </div>
+            <button
+              disabled={cart.length <= 0 ? true : false}
+              type="submit"
+              className="btn btn-primary w-full text-xl mt-10"
+            >
+              Checkout
+            </button>
+          </form>
+          {/* products list & price details */}
+          <div>
+            {/* product list */}
+            <div>
+              <h2 className="text-xl font-bold">Products List</h2>
+              {cart.length !== 0 ? (
+                <div className="flex flex-col items-start gap-1 h-64 overflow-y-auto overflow-x-hidden">
+                  {cart.map((item) => (
+                    <Product key={item?._id} book={item} dispatch={dispatch} />
+                  ))}
+                </div>
+              ) : (
+                <p className="text-md text-pink-500 font-bold">
+                  [Empty] Please Add To Cart Any Products!
+                </p>
+              )}
+            </div>
+            {/* Order Summery */}
+            <div className="my-5">
+              <div className="text-xl flex items-center justify-between my-2">
+                <h4>Subtotal</h4>
+                <h4>
+                  {cart.reduce((previous, current) => {
+                    return parseInt(
+                      parseInt(previous) + parseInt(current.price)
+                    );
+                  }, 0)}{" "}
+                  ৳
+                </h4>
+              </div>
+              <div className="text-xl flex items-center justify-between my-2">
+                <h4>Delivery</h4>
+                <h4>150 ৳</h4>
+              </div>
+              <div className="text-2xl font-bold flex items-center justify-between">
+                <h4>Total</h4>
+                <h4>
+                  {cart.reduce((previous, current) => {
+                    return parseInt(
+                      parseInt(previous) + parseInt(current.price)
+                    );
+                  }, 0) + 150}
+                  ৳
+                </h4>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      ) : (
+        <div>
+          Your request processing, please wait.
+          <Loding />
+        </div>
+      )}
     </div>
   );
 }

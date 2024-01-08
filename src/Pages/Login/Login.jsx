@@ -16,7 +16,6 @@ import Swal from "sweetalert2";
 export default function Login() {
   const googleProvider = new GoogleAuthProvider();
   const history = useLocation();
-  console.log("Location: ", history?.state);
 
   const {
     register,
@@ -34,7 +33,11 @@ export default function Login() {
         showConfirmButton: false,
         timer: 1000,
       });
-      
+      if (history?.state) {
+        window.location.href = `${history?.state}`;
+      } else {
+        window.location.href = "/";
+      }
     });
   };
 
@@ -49,6 +52,11 @@ export default function Login() {
           showConfirmButton: false,
           timer: 1000,
         });
+        if (history?.state) {
+          window.location.href = `${history?.state}`;
+        } else {
+          window.location.href = "/";
+        }
       });
   };
   const loginWithGoogle = () => {
@@ -59,7 +67,6 @@ export default function Login() {
           name: currentUser?.displayName,
           img: currentUser?.photoURL,
         };
-        console.log("I am from signup: ", user);
         sendUserData(user);
       });
       return () => {

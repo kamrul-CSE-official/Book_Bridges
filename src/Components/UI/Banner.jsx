@@ -3,13 +3,13 @@ import bannerImg from "../../assets/BannerImg.json";
 import { Link } from "react-router-dom";
 
 export default function Banner() {
+  
   return (
     <>
-    {/* banner */}
-    <div className="flex flex-col md:flex-row items-center justify-around">
+      {/* banner */}
+      <div className="flex flex-col md:flex-row items-center justify-around">
         <div
           data-aos="fade-left"
-          
           className="flex flex-col items-center justify-center text-center"
         >
           <h1 className="text-6xl font-black text-black">বুক ব্রিজ</h1>
@@ -30,13 +30,13 @@ export default function Banner() {
             <button className="mt-5 btn btn-accent">Know More</button>
           </Link>
         </div>
-        <div className="w-full md:w-[75%]" data-aos="fade-right" >
+        <div className="w-full md:w-[75%]" data-aos="fade-right">
           <Lottie className="w-fit" animationData={bannerImg} />
         </div>
       </div>
 
-    {/* features */}
-    <div className="pt-6 pb-10">
+      {/* features */}
+      <div className="pt-6 pb-10">
         <div>
           <h2 className="text-3xl font-extrabold text-gray-800 mb-4">
             Features
@@ -74,7 +74,7 @@ export default function Banner() {
 
             {/* Feature 3 */}
             <div
-              data-aos="fade-left"             
+              data-aos="fade-left"
               className="p-2 bg-white rounded-lg shadow-md hover:shadow-xl"
             >
               <h3 className="text-xl font-semibold text-gray-800 mb-4">
@@ -89,8 +89,6 @@ export default function Banner() {
           </div>
         </div>
       </div>
-
     </>
-    
-  )
+  );
 }
