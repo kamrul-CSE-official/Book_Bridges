@@ -37,7 +37,13 @@ export default function ProductCart({ book }) {
               {book?.tilte}
             </h2>
             <p className="text-xs">{book.author}</p>
-            <p>{book?.state ? "In Stock" : "Out of stock"}</p>
+            <p>
+              {book?.state ? (
+                <span className="text-green-500">In Stock</span>
+              ) : (
+                <span className="text-red-500 font-bold">Out Of Stock</span>
+              )}
+            </p>
           </Link>
           <Link to={`/productDetails/${book?._id}`}>
             <p>{book.auther}</p>

@@ -140,7 +140,11 @@ export default function ProductDetails() {
                 placeholder="Write a Comment..."
                 className="input input-bordered input-info w-full"
               />
-              <button type="submit" className="btn btn-secondary">
+              <button
+                disabled={user ? false : true}
+                type="submit"
+                className="btn btn-secondary"
+              >
                 Comment
               </button>
             </form>

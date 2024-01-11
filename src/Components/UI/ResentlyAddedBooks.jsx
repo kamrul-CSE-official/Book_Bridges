@@ -21,6 +21,7 @@ export default function ResentlyAddedBooks() {
 
   const shuffledBookData = shuffleArray([...bookData]);
   const randomProducts = shuffledBookData.slice(0, 12);
+  const products = randomProducts.filter((product) => product.state == true);
 
   return (
     <div>
@@ -32,7 +33,7 @@ export default function ResentlyAddedBooks() {
           data-aos="fade-up"
           className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3"
         >
-          {randomProducts.map((book, i) => (
+          {products.map((book, i) => (
             <ProductCart book={book} key={book?._id + i} />
           ))}
         </div>
