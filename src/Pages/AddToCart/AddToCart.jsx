@@ -51,7 +51,6 @@ export default function AddToCart() {
 
       console.log(checkOutData);
 
-      // Use Promise.all to wait for all requests to complete
       await Promise.all(
         cart.map((item) =>
           axios.patch(
