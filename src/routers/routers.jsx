@@ -12,6 +12,8 @@ import WishList from "../Pages/WishList/WishList";
 import AddToCart from "../Pages/AddToCart/AddToCart";
 import Checkout from "../Pages/Checkout/Checkout";
 import PrivateRoute from "./PrivateRoutes";
+import Payment from "../Pages/Payment/Payment";
+import Profile from "../Pages/Profile/Profile";
 
 export const router = createBrowserRouter([
   {
@@ -49,6 +51,14 @@ export const router = createBrowserRouter([
       {
         path: "/wish",
         element: <WishList />,
+      },
+      {
+        path: "/payment",
+        element: <Payment />,
+      },
+      {
+        path: "/profile",
+        element: <Profile />,
       },
       {
         path: "/addToCart",

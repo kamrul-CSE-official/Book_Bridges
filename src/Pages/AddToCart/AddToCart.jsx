@@ -59,7 +59,7 @@ export default function AddToCart() {
           )
         )
       );
-      window.location.href = "/checkout";
+      window.location.href = "/payment";
     } catch (error) {
       console.error("Checkout failed:", error);
     }
