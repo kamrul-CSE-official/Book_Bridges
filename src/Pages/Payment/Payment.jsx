@@ -1,5 +1,4 @@
-import Aos from "aos";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { FaCreditCard, FaRegMoneyBillAlt } from "react-icons/fa";
 
 export default function Payment() {
@@ -23,9 +22,6 @@ export default function Payment() {
     window.location.href = "/checkout";
   };
 
-  useEffect(() => {
-    Aos.init();
-  }, []);
   return (
     <div className="container mx-auto mt-8">
       {/*  */}
@@ -189,7 +185,7 @@ export default function Payment() {
             </button>
           </div>
         ) : type === "cash" ? (
-          <div data-aos="fade-up" className="bg-white p-6 rounded-md shadow-md">
+          <div className="bg-white p-6 rounded-md shadow-md">
             <div className="flex items-center mb-4">
               <FaRegMoneyBillAlt className="text-4xl mr-4 text-green-500" />
               <h3 className="text-xl font-semibold">Cash</h3>
@@ -204,7 +200,7 @@ export default function Payment() {
             <p>Cash payment details go here...</p>
           </div>
         ) : (
-          <div data-aos="fade-up" className="bg-white p-6 rounded-md shadow-md">
+          <div className="bg-white p-6 rounded-md shadow-md">
             <div className="flex items-center mb-4">
               <FaRegMoneyBillAlt className="text-4xl mr-4 text-green-500" />
               <h3 className="text-xl font-semibold">Mobile Banking</h3>
