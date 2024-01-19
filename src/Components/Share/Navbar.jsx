@@ -12,7 +12,7 @@ export default function Navbar() {
 
   const location = useLocation();
   const { user } = useUserInfo();
-
+  const profilePhoto = user?.photoURL;
   const navItems = [
     {
       name: "🏠 Home",
@@ -31,9 +31,10 @@ export default function Navbar() {
       path: "/about",
     },
   ];
+
   return (
     <>
-      <div className="navbar m-0 p-0 bg-gray-50 customNav">
+      <div className="navbar m-0 p-0 bg-gray-50 customNav container mx-auto">
         <div className="navbar-start">
           <div className="dropdown">
             <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -153,14 +154,7 @@ export default function Navbar() {
                   className="btn btn-ghost btn-circle avatar border-2"
                 >
                   <div className="w-10 rounded-full">
-                    <img
-                      alt="user image"
-                      src={
-                        user?.photoURL
-                          ? user?.photoURL
-                          : "https://thumbs.dreamstime.com/b/user-profile-icon-flat-vector-illustration-design-user-profile-icon-flat-vector-illustration-design-isolated-white-background-158416637.jpg"
-                      }
-                    />
+                    <img alt="user image" src={profilePhoto} />
                   </div>
                 </div>
                 <ul
@@ -168,7 +162,7 @@ export default function Navbar() {
                   className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
                 >
                   <li>
-                    <Link href="/profile" className="justify-between">
+                    <Link to="/profile" className="justify-between">
                       Profile
                     </Link>
                   </li>

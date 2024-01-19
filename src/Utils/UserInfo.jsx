@@ -7,7 +7,6 @@ export default function useUserInfo() {
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      console.log(currentUser);
       setUser(currentUser);
       setIsLoading(false);
     });
@@ -15,6 +14,6 @@ export default function useUserInfo() {
     return () => {
       unsubscribe();
     };
-  }, []);
+  });
   return { user, isLoading };
 }

@@ -25,7 +25,7 @@ export default function ProductDetails() {
       setComments(data?.comments);
     }
     fetchProductsDetails();
-  }, [id, comments]);
+  }, [id, comments, data?.comments]);
   const dispatch = useDispatch();
 
   const handleComments = async (e) => {
