@@ -68,7 +68,7 @@ export default function AddToCart() {
     setYourEmail("");
     setNote("");
     setName("");
-    window.location.href = "/checkout";
+    window.location.href = "/payment";
   };
 
   return (

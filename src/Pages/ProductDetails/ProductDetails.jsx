@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { FcLike } from "react-icons/fc";
 import { BsCartCheckFill } from "react-icons/bs";
@@ -8,45 +7,43 @@ import { useDispatch } from "react-redux";
 import { addToCart, wishList } from "../../redux/productSlice/productSlice";
 import useUserInfo from "../../Utils/UserInfo";
 import moment from "moment";
+import {
+  useGetCommentsQuery,
+  usePostCommentMutation,
+} from "../../redux/Api/publicApi";
 
 export default function ProductDetails() {
   const { user } = useUserInfo();
   const { id } = useParams();
-  const [data, setData] = useState(null);
-  const [giveComment, setGiveComment] = useState("");
+  const [data, setData] = useState([]);
   const [comments, setComments] = useState([]);
 
+  const { data: bookData } = useGetCommentsQuery(id);
+
+  // Move the following lines inside the useEffect
   useEffect(() => {
-    async function fetchProductsDetails() {
-      const res = await axios.get(
-        `https://book-bridge-server.vercel.app/products/${id}`
-      );
-      setData(res?.data?.data);
-      setComments(data?.comments);
-    }
-    fetchProductsDetails();
-  }, [id, comments, data?.comments]);
+    setData(bookData?.data);
+    setComments(bookData?.data?.comments);
+  }, [bookData]);
+
+  console.log("Book details: ", data);
   const dispatch = useDispatch();
 
+  const [postComment] = usePostCommentMutation();
   const handleComments = async (e) => {
     e.preventDefault();
+    const userComment = e.target.comment.value;
 
-    if (giveComment.trim() !== "") {
+    if (userComment.length >= 1) {
       const newComment = {
         _id: Date.now(),
-        comment: giveComment,
+        comment: userComment,
         time: moment().format("Do MMMM YYYY, h:mm a"),
       };
 
-      setComments(newComment);
-
       try {
-        await axios.patch(
-          `https://book-bridge-server.vercel.app/comments/${id}`,
-          newComment
-        );
-
-        setGiveComment("");
+        await postComment({ comment: newComment, id: id });
+        // setComments((prevComments) => [...prevComments, newComment]);
       } catch (error) {
         console.error("Error posting comment:", error);
       }
@@ -100,7 +97,7 @@ export default function ProductDetails() {
                       </span>
                     </div>
                   </div>{" "}
-                  <p>Posted by: {data?.user.email}</p>
+                  <p>Posted by: {data?.user?.email}</p>
                 </div>
               </div>
               <button
@@ -135,8 +132,7 @@ export default function ProductDetails() {
             >
               <input
                 type="text"
-                defaultValue={giveComment}
-                onChange={(e) => setGiveComment(e.target.value)}
+                name="comment"
                 placeholder="Write a Comment..."
                 className="input input-bordered input-info w-full"
               />
@@ -149,7 +145,7 @@ export default function ProductDetails() {
               </button>
             </form>
             <div>
-              {data?.comments?.map((item) => (
+              {comments?.map((item) => (
                 <div key={item?._id} className="chat chat-end">
                   <div className="chat-bubble chat-bubble-success w-full text-white">
                     {item?.comment} <br />
